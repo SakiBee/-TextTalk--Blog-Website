@@ -234,6 +234,16 @@ const logoutCtrl = async (req, res, next) => {
   });
 };
 
+const userInfo = async (req, res, next) => {
+  try {
+    res.redirect("api/v1/users/user-info");
+  } catch (e) {
+    return res.render("users/userDetails", {
+      error:e.message
+    });
+  }
+};
+
 
 module.exports = {
   registerCtrl,
@@ -245,4 +255,5 @@ module.exports = {
   updatePasswordCtrl,
   updateUserCtrl,
   logoutCtrl,
+  userInfo,
 };

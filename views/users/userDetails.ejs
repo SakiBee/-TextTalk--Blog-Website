@@ -6,60 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS -->
     <link rel="stylesheet" href="/css/profile.css" />
-    <title>Profile</title>
+    <title>User Info</title>
   </head>
   <body>
     <!-- nav -->
     <%- include("../partials/navbar.ejs") %>
 
     <div class="profile-container">
-      <header style="background-image: url(<%=user?.coverImage%>)">
+      <header style="background-image: url(../../public/images/headerbg.jpg)">
         <div class="icons-container">
-          <p>
-            <a href="/api/v1/users/cover-photo-upload">
-              <i class="fa fa-camera upload-btn"></i>
-              <!-- <button type="submit">Upload Cover</button> -->
-            </a>
-          </p>
-          <p>
-            <a href="/api/v1/users/<%=user._id%>">
-              <!-- <i class="fa fa-solid fa-key"></i> -->
-              <i class="fa fa-user"></i>
-              <!-- <button type="submit">Edit Details</button> -->
-            </a>
-          </p>
-          <p>
-            <a href="/api/v1/users/update-password">
-              <i class="fa fa-solid fa-key"></i>
-              <!-- <button type="submit">Update Pass</button> -->
-            </a>
-          </p>
+          <p>Contact info</p>
         </div>
       </header>
 
       <!-- profile image -->
       <div class="profile-img">
-        <img src="<%=user?.profileImage %>" alt="profile image"/>
-        <!-- upload profile image icon -->
-        <a href="/api/v1/users/profile-photo-upload">
-          <i class="fa fa-camera upload-btn"></i>
-          <!-- <button type="submit">Edit</button> -->
-        </a>
+        <img src="../../public/images/post3.jpg" alt="profile image"/>
       </div>
+
       <!-- personal details -->
       <div class="personal-container">
         <div class="details-wrapper">
           <div class="details">
             <i class="fa fa-user"></i>
-            <p>Name: <%= user?.fullname %></p>
+            <p>Name: Md. Sakib Uddin</p>
           </div>
           <div class="details">
             <i class="fa fa-envelope"></i>
-            <p>Email: <%= user?.email %></p>
+            <p>Email: abc@gmail.com</p>
           </div>
           <div class="details">
             <i class="fa fa-calendar"></i>
-            <p>Date Joined: <%= new Date(user.createdAt).toLocaleDateString() %></p>
+            <p>Since: 01 jan, 2022</p>
           </div>
         </div>
       </div>
@@ -68,38 +46,68 @@
     <div class="latest-post-title">
       <!-- Icon -->
       <i class="fa fa-book-open"></i>
-      <h1>Latest Posts (<%=user?.posts?.length %>)</h1>
+      <h1>Total Posts (20)</h1>
     </div>
 
     <!-- content -->
     <section class="container-flex">
-      <%if(user?.posts?.length <= 0) {%>
-        <h1>You have no post</h1>
-      <% } else { %>
-          <% user?.posts?.forEach((post) => { %>
             <article class="post-content">
-              <img src="<%=post?.image %>" alt="" class="post-image" />
+              <img src="../../public/images/post7.jpg" alt="" class="post-image" />
               <p class="post-info">
-                <span class="post-author">
-                  <i class="fa fa-user"></i>
-                  <a href="#"><%=post?.user?.fullname %></a>
-                </span>
                 <span class="post-date">
                   <i class="fa fa-calendar-alt"></i>
-                  <time datetime="2020-01-01"><%= new Date(user.createdAt).toLocaleDateString() %></time>
+                  <time datetime="2020-01-01">2020-01-01</time>
                 </span>
               </p>
-              <h1 class="post-title"><%=post?.title %></h1>
-              <p class="post-body"><%=truncatePost(post?.description)%></p>
+              <h1 class="post-title">Title</h1>
+              <p class="post-body">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, incidunt vero totam atque eius labore reiciendis reprehenderit earum, veniam sint ullam quibusdam vitae eligendi aperiam perspiciatis cupiditate optio neque? Maiores?
+
+              </p>
               <!-- category -->
               <div class="post-category">
-                <span><%=post?.category %>:</span>
+                <span>Java</span>
               </div>
-              <a href="/api/v1/posts/<%=post?._id%>" class="post-read-more">Continue Reading...</a>
-            </article>
-          <% }); %>
-      <% } %>
-      
+              <a href="#" class="post-read-more">Continue Reading...</a>
+            </article>  
+            <article class="post-content">
+              <img src="../../public/images/post7.jpg" alt="" class="post-image" />
+              <p class="post-info">
+                <span class="post-date">
+                  <i class="fa fa-calendar-alt"></i>
+                  <time datetime="2020-01-01">2020-01-01</time>
+                </span>
+              </p>
+              <h1 class="post-title">Title</h1>
+              <p class="post-body">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, incidunt vero totam atque eius labore reiciendis reprehenderit earum, veniam sint ullam quibusdam vitae eligendi aperiam perspiciatis cupiditate optio neque? Maiores?
+
+              </p>
+              <!-- category -->
+              <div class="post-category">
+                <span>Java</span>
+              </div>
+              <a href="#" class="post-read-more">Continue Reading...</a>
+            </article> 
+            <article class="post-content">
+              <img src="../../public/images/post7.jpg" alt="" class="post-image" />
+              <p class="post-info">
+                <span class="post-date">
+                  <i class="fa fa-calendar-alt"></i>
+                  <time datetime="2020-01-01">2020-01-01</time>
+                </span>
+              </p>
+              <h1 class="post-title">Title</h1>
+              <p class="post-body">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, incidunt vero totam atque eius labore reiciendis reprehenderit earum, veniam sint ullam quibusdam vitae eligendi aperiam perspiciatis cupiditate optio neque? Maiores?
+
+              </p>
+              <!-- category -->
+              <div class="post-category">
+                <span>Java</span>
+              </div>
+              <a href="#" class="post-read-more">Continue Reading...</a>
+            </article>     
     </section>
     <!-- footer -->
     <%- include("../partials/footer.ejs") %>

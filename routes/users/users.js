@@ -2,7 +2,7 @@ const express = require("express");
 const userRoutes = express.Router();
 const multer = require("multer");
 const storage = require("../../config/cloudinary");
-const {registerCtrl, loginCtrl, userDetailsCtrl, profileCtrl, uploadProfileCtrl, uploadCoverPhotoCtrl, updatePasswordCtrl, updateUserCtrl, logoutCtrl} = require("../../controllers/users/users");
+const {registerCtrl, loginCtrl, userDetailsCtrl, profileCtrl, uploadProfileCtrl, uploadCoverPhotoCtrl, updatePasswordCtrl, updateUserCtrl, logoutCtrl, userInfo} = require("../../controllers/users/users");
 const protected = require("../../middlewares/protected");
 
 
@@ -48,6 +48,11 @@ userRoutes.get("/update-password", (req, res) => {
   res.render("users/updatePass", { error: null });
 });
 
+
+userRoutes.get("/user-info", (req, res) => {
+  res.render("users/userDetails");
+})
+
 //--------------------------------------------------------
 //POST/api/v1/users/Register
 userRoutes.post("/register", registerCtrl);
@@ -75,6 +80,9 @@ userRoutes.get("/logout", logoutCtrl);
 
 //GET/api/v1/users/:id
 userRoutes.get("/:id", userDetailsCtrl);
+
+//GET/api/v1/users/user-info
+userRoutes.get("/user-info", userInfo);
 
 
 
