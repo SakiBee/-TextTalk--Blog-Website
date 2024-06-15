@@ -81,8 +81,9 @@ userRoutes.get("/logout", logoutCtrl);
 //GET/api/v1/users/:id
 userRoutes.get("/:id", userDetailsCtrl);
 
-//GET/api/v1/users/user-info
-userRoutes.get("/user-info", userInfo);
+// GET /api/v1/users/user-info/:id
+userRoutes.get("/user-info/:id", userInfo);
+
 
 
 

@@ -50,14 +50,17 @@
           <p class="post-info">
             <span class="post-author">
               <!-- I will create a route for user info(userDetailsCtrl) -->
-              <a href="#"><i class="fa fa-user"></i></a>
-              <a href="/api/v1/users/user-info"><%=post?.user?.fullname %></a>
+              <a href="/api/v1/users/user-info/<%=post?.user?._id%>">
+                <i class="fa fa-user"></i>
+                <%=post?.user?.fullname %>
+              </a>
             </span>
             <span class="post-date">
               <i class="fa fa-calendar-alt"></i>
               <time datetime="2020-01-01"><%= new Date(post.createdAt).toDateString() %></time>
             </span>
-          </p><h1 class="post-title"><%=post?.title %></h1>
+          </p> 
+          <h1 class="post-title"><%=post?.title %></h1>
           <p class="post-body"> <%=truncatePost(post?.description)%> </p>
           <!-- category -->
           <div class="post-category">

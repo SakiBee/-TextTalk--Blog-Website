@@ -13,7 +13,7 @@
     <%- include("../partials/navbar.ejs") %>
 
     <div class="profile-container">
-      <header style="background-image: url(../../public/images/headerbg.jpg)">
+      <header style="background-image: url(<%=user.coverImage%>)">
         <div class="icons-container">
           <p>Contact info</p>
         </div>
@@ -21,7 +21,7 @@
 
       <!-- profile image -->
       <div class="profile-img">
-        <img src="../../public/images/post3.jpg" alt="profile image"/>
+        <img src="<%=user.profileImage%>" alt="profile image" />
       </div>
 
       <!-- personal details -->
@@ -29,15 +29,15 @@
         <div class="details-wrapper">
           <div class="details">
             <i class="fa fa-user"></i>
-            <p>Name: Md. Sakib Uddin</p>
+            <p>Name: <%= user.fullname %></p>
           </div>
           <div class="details">
             <i class="fa fa-envelope"></i>
-            <p>Email: abc@gmail.com</p>
+            <p>Email: <%= user.email %></p>
           </div>
           <div class="details">
             <i class="fa fa-calendar"></i>
-            <p>Since: 01 jan, 2022</p>
+            <p>Since: <%= new Date(user.createdAt).toDateString() %></p>
           </div>
         </div>
       </div>
@@ -46,68 +46,29 @@
     <div class="latest-post-title">
       <!-- Icon -->
       <i class="fa fa-book-open"></i>
-      <h1>Total Posts (20)</h1>
+      <h1>Total Posts (<%= user.posts.length %>)</h1>
     </div>
 
     <!-- content -->
     <section class="container-flex">
-            <article class="post-content">
-              <img src="../../public/images/post7.jpg" alt="" class="post-image" />
-              <p class="post-info">
-                <span class="post-date">
-                  <i class="fa fa-calendar-alt"></i>
-                  <time datetime="2020-01-01">2020-01-01</time>
-                </span>
-              </p>
-              <h1 class="post-title">Title</h1>
-              <p class="post-body">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, incidunt vero totam atque eius labore reiciendis reprehenderit earum, veniam sint ullam quibusdam vitae eligendi aperiam perspiciatis cupiditate optio neque? Maiores?
-
-              </p>
-              <!-- category -->
-              <div class="post-category">
-                <span>Java</span>
-              </div>
-              <a href="#" class="post-read-more">Continue Reading...</a>
-            </article>  
-            <article class="post-content">
-              <img src="../../public/images/post7.jpg" alt="" class="post-image" />
-              <p class="post-info">
-                <span class="post-date">
-                  <i class="fa fa-calendar-alt"></i>
-                  <time datetime="2020-01-01">2020-01-01</time>
-                </span>
-              </p>
-              <h1 class="post-title">Title</h1>
-              <p class="post-body">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, incidunt vero totam atque eius labore reiciendis reprehenderit earum, veniam sint ullam quibusdam vitae eligendi aperiam perspiciatis cupiditate optio neque? Maiores?
-
-              </p>
-              <!-- category -->
-              <div class="post-category">
-                <span>Java</span>
-              </div>
-              <a href="#" class="post-read-more">Continue Reading...</a>
-            </article> 
-            <article class="post-content">
-              <img src="../../public/images/post7.jpg" alt="" class="post-image" />
-              <p class="post-info">
-                <span class="post-date">
-                  <i class="fa fa-calendar-alt"></i>
-                  <time datetime="2020-01-01">2020-01-01</time>
-                </span>
-              </p>
-              <h1 class="post-title">Title</h1>
-              <p class="post-body">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Numquam, incidunt vero totam atque eius labore reiciendis reprehenderit earum, veniam sint ullam quibusdam vitae eligendi aperiam perspiciatis cupiditate optio neque? Maiores?
-
-              </p>
-              <!-- category -->
-              <div class="post-category">
-                <span>Java</span>
-              </div>
-              <a href="#" class="post-read-more">Continue Reading...</a>
-            </article>     
+      <% user.posts.forEach((post) => { %>
+      <article class="post-content">
+        <img src="<%=post.image%>" alt="" class="post-image" />
+        <p class="post-info">
+          <span class="post-date">
+            <i class="fa fa-calendar-alt"></i>
+            <time datetime="2020-01-01"><%= new Date(post.createdAt).toDateString() %></time>
+          </span>
+        </p>
+        <h1 class="post-title"><%= post.title %></h1>
+        <p class="post-body"><%=post.description%> </p>
+        <!-- category -->
+        <div class="post-category">
+          <span><%= post.category %></span>
+        </div>
+        <a href="#" class="post-read-more">Continue Reading...</a>
+      </article>
+      <% }) %>
     </section>
     <!-- footer -->
     <%- include("../partials/footer.ejs") %>

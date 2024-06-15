@@ -235,14 +235,20 @@ const logoutCtrl = async (req, res, next) => {
 };
 
 const userInfo = async (req, res, next) => {
+  const userId = req.params.id;
   try {
-    res.redirect("api/v1/users/user-info");
+    const user = await User.findById(userId);
+    res.render("users/userDetails", {
+      user,
+      error: null
+    });
   } catch (e) {
     return res.render("users/userDetails", {
-      error:e.message
+      error: e.message,
     });
   }
 };
+
 
 
 module.exports = {

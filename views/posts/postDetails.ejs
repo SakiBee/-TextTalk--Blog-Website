@@ -16,35 +16,41 @@
       <!-- main -->
       <main class="post-details">
         <article class="post-details-content">
-          <img src="<%=post?.image%>" alt="" class="post-image" />
+          <img src="<%=post?.image%>" alt="" class="" />
+  
+            <!-- post delete and edit -->
+            <%if(post?.user?._id.toString() === userAuth.toString()) {%>
+              <div class="post-details-action">
+                <a href="/api/v1/posts/get-update-form/<%=post?._id%>">
+                  <i class="fa fa-edit"></i>
+                  <!-- <button type="submit">Edit</button> -->
+                </a>
+                <form action="/api/v1/posts/<%=post?._id%>?_method=DELETE" method="POST">
+                  <button><i class="fa fa-trash"></i></button>
+                  <!-- <button type="submit">Delete</button> -->
+                </form>
+              </div>
+            <%}%>
+        
           
-          <!-- post delete and edit -->
-          <%if(post?.user?._id.toString() === userAuth.toString()) {%>
-            <div class="post-details-action">
-              <a href="/api/v1/posts/get-update-form/<%=post?._id%>">
-                <i class="fa fa-edit"></i>
-                <!-- <button type="submit">Edit</button> -->
-              </a>
-              <form action="/api/v1/posts/<%=post?._id%>?_method=DELETE" method="POST">
-                <button><i class="fa fa-trash"></i></button>
-                <!-- <button type="submit">Delete</button> -->
-              </form>
-            </div>
-          <%}%>
 
           <h1 class="post-title"><%=post?.title %></h1>
           <p class="post-body"><%=post?.description%></p>
         </article>
-        <!-- Comment form -->
-        <div class="comment-form">
-          <h2>Leave a comment</h2>
-          <form action="/api/v1/comments/<%=post?._id%>" method="POST">
-            <div class="form-group">
-              <input type="text" name="message" id="name" />
-            </div>
-            <button type="submit" class="btn">Submit</button>
-          </form>
-        </div>
+
+       
+          <!-- Comment form -->
+          <div class="comment-form">
+            <h2>Leave a comment</h2>
+            <form action="/api/v1/comments/<%=post?._id%>" method="POST">
+              <div class="form-group">
+                <input type="text" name="message" id="name" />
+              </div>
+              <button type="submit" class="btn">Submit</button>
+            </form>
+          </div>  
+       
+        
 
         <!-- comments -->
         <div class="comments">
@@ -60,19 +66,21 @@
             </div>
             <div class="comment-body">
               <p><p><%= comment.message %></p></p>
-              <!-- comment delete/update icon -->
-              <%if(comment?.user?._id.toString() === userAuth.toString()) {%>
-                <div class="post-details-action">
-                  <a href="/api/v1/comments/<%=comment?._id%>">
-                    <i class="fa fa-edit"></i>
-                    <!-- <button type="submit">Edit</button> -->
-                  </a>
-                  <form action="/api/v1/comments/<%=comment?._id%>?_method=DELETE&postId=<%=post?._id %>" method="POST">
-                    <button><i class="fa fa-trash"></i></button>
-                    <!-- <button type="submit">Delete</button> -->
-                  </form>
-                </div>
-              <%}%>
+             
+                <!-- comment delete/update icon -->
+                <%if(comment?.user?._id.toString() === userAuth.toString()) {%>
+                  <div class="post-details-action">
+                    <a href="/api/v1/comments/<%=comment?._id%>">
+                      <i class="fa fa-edit"></i>
+                      <!-- <button type="submit">Edit</button> -->
+                    </a>
+                    <form action="/api/v1/comments/<%=comment?._id%>?_method=DELETE&postId=<%=post?._id %>" method="POST">
+                      <button><i class="fa fa-trash"></i></button>
+                      <!-- <button type="submit">Delete</button> -->
+                    </form>
+                  </div>
+                <%}%> 
+              
             </div>
           </div>
         <% }) %>
