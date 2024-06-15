@@ -1,126 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        
-    <link rel="stylesheet" href="/css/postDetails.css" />
-    <title>Post Details</title>
-  </head>
-  <body>
-   <!-- nav -->
-   <%-include("../partials/navbar.ejs") %>
-    <!-- content -->
-    <section class="container-flex">
-      <!-- main -->
-      <main class="post-details">
-        <article class="post-details-content">
-          <img src="<%=post?.image%>" alt="" class="" />
-  
-            <!-- post delete and edit -->
-            <%if(post?.user?._id.toString() === userAuth.toString()) {%>
-              <div class="post-details-action">
-                <a href="/api/v1/posts/get-update-form/<%=post?._id%>">
-                  <i class="fa fa-edit"></i>
-                  <!-- <button type="submit">Edit</button> -->
-                </a>
-                <form action="/api/v1/posts/<%=post?._id%>?_method=DELETE" method="POST">
-                  <button><i class="fa fa-trash"></i></button>
-                  <!-- <button type="submit">Delete</button> -->
-                </form>
-              </div>
-            <%}%>
-        
-          
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
+  <link rel="stylesheet" href="/css/postDetails.css" />
+  <title>Post Details</title>
+</head>
+<body>
+  <!-- nav -->
+  <%-include("../partials/navbar.ejs") %>
+  <!-- content -->
+  <section class="container-flex">
+    <!-- main -->
+    <main class="post-details">
+      <article class="post-details-content">
+        <img src="<%= post?.image %>" alt="" class="" />
 
-          <h1 class="post-title"><%=post?.title %></h1>
-          <p class="post-body"><%=post?.description%></p>
-        </article>
-
-       
-          <!-- Comment form -->
-          <div class="comment-form">
-            <h2>Leave a comment</h2>
-            <form action="/api/v1/comments/<%=post?._id%>" method="POST">
-              <div class="form-group">
-                <input type="text" name="message" id="name" />
-              </div>
-              <button type="submit" class="btn">Submit</button>
+        <!-- post delete and edit -->
+        <% if (userAuth && post?.user?._id.toString() === userAuth._id.toString()) { %>
+          <div class="post-details-action">
+            <a href="/api/v1/posts/get-update-form/<%= post?._id %>">
+              <i class="fa fa-edit"></i>
+            </a>
+            <form action="/api/v1/posts/<%= post?._id %>?_method=DELETE" method="POST">
+              <button><i class="fa fa-trash"></i></button>
             </form>
-          </div>  
-       
-        
+          </div>
+        <% } %>
+      
+        <h1 class="post-title"><%= post?.title %></h1>
+        <p class="post-body"><%= post?.description %></p>
+      </article>
 
-        <!-- comments -->
-        <div class="comments">
-          <h2>Comments</h2>
-          <% post?.comment?.forEach(comment => { %>
-            <div class="comment">
+      <% if (userAuth) { %>
+        <!-- Comment form -->
+        <div class="comment-form">
+          <h2>Leave a comment</h2>
+          <form action="/api/v1/comments/<%= post?._id %>" method="POST">
+            <div class="form-group">
+              <input type="text" name="message" id="name" />
+            </div>
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div>
+      <% } %>
+
+      <!-- comments -->
+      <div class="comments">
+        <h2>Comments</h2>
+        <% post?.comment?.forEach(comment => { %>
+          <div class="comment">
             <div class="comment-info">
-              <img src="<%=comment?.user?.profileImage%>" alt="" class="comment-author-image"/>
+              <img src="<%= comment?.user?.profileImage %>" alt="" class="comment-author-image" />
               <div class="comment-author">
                 <h4><%= comment?.user?.fullname %></h4>
                 <span><%= new Date(comment.createdAt).toDateString() %></span>
               </div>
             </div>
             <div class="comment-body">
-              <p><p><%= comment.message %></p></p>
-             
-                <!-- comment delete/update icon -->
-                <%if(comment?.user?._id.toString() === userAuth.toString()) {%>
-                  <div class="post-details-action">
-                    <a href="/api/v1/comments/<%=comment?._id%>">
-                      <i class="fa fa-edit"></i>
-                      <!-- <button type="submit">Edit</button> -->
-                    </a>
-                    <form action="/api/v1/comments/<%=comment?._id%>?_method=DELETE&postId=<%=post?._id %>" method="POST">
-                      <button><i class="fa fa-trash"></i></button>
-                      <!-- <button type="submit">Delete</button> -->
-                    </form>
-                  </div>
-                <%}%> 
+              <p><%= comment.message %></p>
               
+              <!-- comment delete/update icon -->
+              <% if (userAuth && comment?.user?._id.toString() === userAuth._id.toString()) { %>
+                <div class="post-details-action">
+                  <a href="/api/v1/comments/<%= comment?._id %>">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <form action="/api/v1/comments/<%= comment?._id %>?_method=DELETE&postId=<%= post?._id %>" method="POST">
+                    <button><i class="fa fa-trash"></i></button>
+                  </form>
+                </div>
+              <% } %> 
             </div>
           </div>
         <% }) %>
-        </div>
-      </main>
-      <!-- aside -->
-      <!-- <aside class="sidebar">
-        <div class="about-me">
-          <h2>About The Author</h2>
-          <img class="avatar" src="<%=post?.user?.profileImage %>" alt="profile image" />
-
-          <h2 class="about-name"><%=post?.user?.fullname %></h2>
-          <small><%=post?.user?.role %></small>
-          <p class="about-me-bio"><%=post?.user?.bio %></p>
-        </div>
-
-        <div class="sidebar-content">
-          <h1 class="post-title">Start Here</h1>
-          <img src="./images/post4.jpg" alt="" class="post-image" />
-          <p class="post-info">
-            <span class="post-author">
-              <i class="fa fa-user"></i>
-              <a href="#">John Doe</a>
-            </span>
-            <span class="post-date">
-              <i class="fa fa-calendar-alt"></i>
-              <time datetime="2020-01-01">January 1, 2020</time>
-            </span>
-          </p>
-          <p class="post-body">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia
-            itaque inventore culpa placeat! Cum nam optio, labore, voluptas sunt
-            quam rem cupiditate laboriosam amet reiciendis velit doloribus eum!
-            Repudiandae, odio?
-          </p>
-          <a href="/" class="post-read-more">Continue Reading...</a>
-        </div>
-      </aside> -->
-    </section>
-    <!-- footer -->
-    <%-include("../partials/footer.ejs") %>
-  </body>
+      </div>
+    </main>
+  </section>
+  <!-- footer -->
+  <%-include("../partials/footer.ejs") %>
+</body>
 </html>

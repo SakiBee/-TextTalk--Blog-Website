@@ -63,7 +63,11 @@ const fetchPostCtrl = async (req, res, next) => {
       }
     }).populate("user");
 
-    res.render("posts/postDetails", {post, error: null});
+    res.render("posts/postDetails", {
+      post, 
+      error: null,
+      userAuth: req.session.userAuth || null
+    });
   } catch(e) {
     return res.render("posts/postDetails", {
       post: null,

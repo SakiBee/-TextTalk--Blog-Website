@@ -235,9 +235,8 @@ const logoutCtrl = async (req, res, next) => {
 };
 
 const userInfo = async (req, res, next) => {
-  const userId = req.params.id;
   try {
-    const user = await User.findById(userId);
+    const user = await User.findById(req.params.id).populate("posts");
     res.render("users/userDetails", {
       user,
       error: null

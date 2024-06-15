@@ -13,7 +13,7 @@
     <%- include("../partials/navbar.ejs") %>
 
     <div class="profile-container">
-      <header style="background-image: url(<%=user.coverImage%>)">
+      <header style="background-image: url(<%= user.coverImage %>)">
         <div class="icons-container">
           <p>Contact info</p>
         </div>
@@ -21,7 +21,7 @@
 
       <!-- profile image -->
       <div class="profile-img">
-        <img src="<%=user.profileImage%>" alt="profile image" />
+        <img src="<%= user.profileImage %>" alt="profile image" />
       </div>
 
       <!-- personal details -->
@@ -41,8 +41,8 @@
           </div>
         </div>
       </div>
-      
     </div>
+
     <div class="latest-post-title">
       <!-- Icon -->
       <i class="fa fa-book-open"></i>
@@ -52,24 +52,25 @@
     <!-- content -->
     <section class="container-flex">
       <% user.posts.forEach((post) => { %>
-      <article class="post-content">
-        <img src="<%=post.image%>" alt="" class="post-image" />
-        <p class="post-info">
-          <span class="post-date">
-            <i class="fa fa-calendar-alt"></i>
-            <time datetime="2020-01-01"><%= new Date(post.createdAt).toDateString() %></time>
-          </span>
-        </p>
-        <h1 class="post-title"><%= post.title %></h1>
-        <p class="post-body"><%=post.description%> </p>
-        <!-- category -->
-        <div class="post-category">
-          <span><%= post.category %></span>
-        </div>
-        <a href="#" class="post-read-more">Continue Reading...</a>
-      </article>
+        <article class="post-content">
+          <img src="<%= post.image %>" alt="" class="post-image" />
+          <p class="post-info">
+            <span class="post-date">
+              <i class="fa fa-calendar-alt"></i>
+              <time datetime="2020-01-01"><%= new Date(post.createdAt).toDateString() %></time>
+            </span>
+          </p>
+          <h1 class="post-title"><%= post.title %></h1>
+          <p class="post-body"><%= post.description %></p>
+          <!-- category -->
+          <div class="post-category">
+            <span><%= post.category %></span>
+          </div>
+          <a href="/api/v1/posts/<%=post?._id%>" class="post-read-more">Continue Reading...</a>
+        </article>
       <% }) %>
     </section>
+
     <!-- footer -->
     <%- include("../partials/footer.ejs") %>
   </body>
